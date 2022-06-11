@@ -4,7 +4,7 @@
 
 #include "ChessSquare.h"
 #include "ChessGame.h"
-
+#include "Traverse.h"
 class ChessBoard {
 
 	public:	

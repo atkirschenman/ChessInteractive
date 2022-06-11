@@ -4,8 +4,21 @@
 
     ChessBoard::ChessBoard(int s)
 	{
-		Size = s;
-    	theGrid = new ChessSquare[s * s];
+	 static ChessSquare* origin = new ChessSquare;
+		
+		for(int i =0;i<s;i++)
+		{
+
+			//Create 0th Column
+			AddSquare(origin, 0,i);
+
+			for(int j =0;i<s;i++)
+			{
+				//Create ith row
+				AddSquare(origin, i, j);
+			}
+		}
+
 	}
     
     void ChessBoard::SetupBoard()
