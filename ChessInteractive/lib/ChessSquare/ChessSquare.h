@@ -10,8 +10,11 @@ class ChessSquare
         int ColumnNumber;
         bool CurrentOccupied;
         bool LegalNextMove;
-
-        ChessPiece OccupiedPiece();
+        ChessSquare* Up;
+        ChessSquare* Down;
+        ChessSquare* Left;
+        ChessSquare* Right;
+        ChessPiece* OccupiedPiece();
 
         ChessSquare(int x, int y); 
         ChessSquare();
