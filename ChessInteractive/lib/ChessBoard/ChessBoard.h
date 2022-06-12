@@ -9,8 +9,8 @@ class ChessBoard {
 
 	public:	
     int Size;
-    ChessGame myChessGame;
-    ChessSquare* theGrid;
+    ChessGame* myChessGame;
+    ChessSquare* Origin;
     
 
     //Constructors//
@@ -18,7 +18,7 @@ class ChessBoard {
     
     void SetupBoard();
 
-    void MarkNextLegalMoves(ChessSquare currentCell, int Id);
+    void MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell);
 
     void CleartheBoard();
 

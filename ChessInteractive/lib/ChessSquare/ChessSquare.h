@@ -8,13 +8,13 @@ class ChessSquare
     public:
         int RowNumber;
         int ColumnNumber;
-        bool CurrentOccupied;
+        bool CurrentlyOccupied;
         bool LegalNextMove;
         ChessSquare* Up;
         ChessSquare* Down;
         ChessSquare* Left;
         ChessSquare* Right;
-        ChessPiece* OccupiedPiece();
+        ChessPiece* OccupiedPiece;
 
         ChessSquare(int x, int y); 
         ChessSquare();

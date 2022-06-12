@@ -2,35 +2,31 @@
 
 
 
-    ChessBoard::ChessBoard(int s)
+    ChessBoard(s)
 	{
-	 static ChessSquare* origin = new ChessSquare;
-		
+	  //ChessSquare* holder = new ChessSquare;
+	  
 		for(int i =0;i<s;i++)
 		{
-
-			//Create 0th Column
-			AddSquare(origin, 0,i);
-
-			for(int j =0;i<s;i++)
+			for(int j =0;j<s;j++)
 			{
-				//Create ith row
-				AddSquare(origin, i, j);
+				//Create i'th row
+				AddSquare(origin, j, i);
 			}
 		}
 
 	}
     
-    void ChessBoard::SetupBoard()
+    void SetupBoard()
 	{
 		myChessGame.SetupBoard(theGrid, Size);
 	}
-    void ChessBoard::MarkNextLegalMoves(ChessSquare currentCell, int id)
+    void MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell)
 	{
-		myChessGame.MarkNextLegalMoves(currentCell, lGrid, Size);
+		myChessGame.MarkNextLegalMoves(Origin,currentCell, Size);
 	}
 
-    void ChessBoard::CleartheBoard()
+    void CleartheBoard()
 	{
 		myChessGame.ClearBoard(theGrid,Size);
 	}

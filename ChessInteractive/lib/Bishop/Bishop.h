@@ -1,11 +1,12 @@
-#include "ChessSquare.h"
+
 #ifndef BISH_H
 #define BISH_H
-
+#include "ChessSquare.h"
+#include "Traverse.h"
 class Bishop
 {
     public:
-        unsigned int ID;
+        unsigned int ID=BISHOP;
         bool Color;
         bool InPlay;
 

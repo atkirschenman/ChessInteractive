@@ -11,6 +11,8 @@ int AddSquare(ChessSquare* Head, int x, int y)
     }
        
     ChessSquare* newSquare = new ChessSquare;
+    newSquare->ColumnNumber=x;
+    newSquare->RowNumber=y;
     //Right
     newSquare->Right = FindSquare(walker, x+1, y);
     if(newSquare->Right!=nullptr)
@@ -27,10 +29,6 @@ int AddSquare(ChessSquare* Head, int x, int y)
     newSquare->Down = FindSquare(walker, x, y-1);
     if(newSquare->Down!=nullptr)
         newSquare->Down->Up=newSquare;
-
-    newSquare->ColumnNumber = x;
-    newSquare->RowNumber = y;
-
 }
 
 ChessSquare* FindSquare(ChessSquare* Head, int x, int y)

@@ -1,10 +1,11 @@
-#ifndef CP_H
-#define CP_H
-
-class ChessPiece
+#ifndef KING_H
+#define KING_H
+#include "ChessSquare.h"
+#include "Traverse.h"
+class King
 {
     public:
-        unsigned int ID;
+        unsigned int ID = KING;
         bool Color;
         bool InPlay;
 
@@ -16,9 +17,9 @@ class ChessPiece
             QUEEN,
             KING};
 
-        ChessPiece(bool lcolor, ChessPieceEnum lid);
+        King(bool lcolor, ChessPieceEnum lid);
 
-         void MarkNextLegalMoves(ChessSquare currentCell, ChessSquare lGrid, int Size);
+         void MarkNextLegalMoves(ChessSquare* Origin,ChessSquare* currentCell);
 };
 
 
