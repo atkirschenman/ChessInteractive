@@ -1,10 +1,9 @@
-#ifndef CP_H
-#define CP_H
-
-class ChessPiece
+#include "ChessSquare.h"
+#include "Traverse.h"
+class Queen
 {
     public:
-        unsigned int ID;
+        unsigned int ID = QUEEN;
         bool Color;
         bool InPlay;
 
@@ -16,8 +15,7 @@ class ChessPiece
             QUEEN,
             KING};
 
-        ChessPiece(bool lcolor, ChessPieceEnum lid);
+        Queen(bool lcolor, ChessPieceEnum lid);
+
+         void MarkNextLegalMoves(ChessSquare* Origin,ChessSquare* currentCell);
 };
-
-
-#endif

@@ -1,10 +1,10 @@
 #ifndef CP_H
 #define CP_H
 
-class ChessPiece
+class Pawn
 {
     public:
-        unsigned int ID;
+        unsigned int ID = PAWN;
         bool Color;
         bool InPlay;
 
@@ -16,7 +16,7 @@ class ChessPiece
             QUEEN,
             KING};
 
-        ChessPiece(bool lcolor, ChessPieceEnum lid);
+        Pawn(bool lcolor, ChessPieceEnum lid);
 };
 
 
