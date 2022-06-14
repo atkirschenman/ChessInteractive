@@ -1,6 +1,6 @@
 #include "Bishop.h"
 
-
+// hello andrew
     
 
     Bishop::Bishop(bool lcolor)
