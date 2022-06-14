@@ -1,8 +1,6 @@
 #include "ChessBoard.h"
 
-
-
-    ChessBoard(s)
+  	ChessBoard::ChessBoard(int s)
 	{
 	  //ChessSquare* holder = new ChessSquare;
 	  
@@ -11,22 +9,21 @@
 			for(int j =0;j<s;j++)
 			{
 				//Create i'th row
-				AddSquare(origin, j, i);
+				AddSquare(Origin, j, i);
 			}
 		}
-
-	}
-    
-    void SetupBoard()
-	{
-		myChessGame.SetupBoard(theGrid, Size);
-	}
-    void MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell)
-	{
-		myChessGame.MarkNextLegalMoves(Origin,currentCell, Size);
 	}
 
-    void CleartheBoard()
+    void ChessBoard::SetupBoard()
 	{
-		myChessGame.ClearBoard(theGrid,Size);
+		myChessGame.SetupBoard(Origin, Size);
+	}
+    void ChessBoard::MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell)
+	{
+		myChessGame.MarkNextLegalMoves(Origin,currentCell);
+	}
+
+    void ChessBoard::CleartheBoard()
+	{
+		//myChessGame.ClearBoard(theGrid,Size);
 	}

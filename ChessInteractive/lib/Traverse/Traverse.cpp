@@ -34,16 +34,17 @@ int AddSquare(ChessSquare* Head, int x, int y)
 ChessSquare* FindSquare(ChessSquare* Head, int x, int y)
 {
     ChessSquare* walker=Head;
+
        while(walker->RowNumber!=y)
     {
         if (walker->Down==nullptr)
-            return;
+            return nullptr;
         walker = walker->Down;
     }
     while(walker->ColumnNumber!=x) 
     {
         if (walker->Right==nullptr)
-            return;
+            return nullptr;
         walker = walker->Right;
     }
 

@@ -1,15 +1,15 @@
-#include "ChessSquare.h"
+
 #ifndef CG_H
 #define CG_H
+#include "ChessSquare.h"
 
 class ChessGame
 {
     
     public:
-    ChessSquare theGrid;
-    void ClearBoard(ChessSquare lGrid, int Size);
-    void MarkNextLegalMoves(ChessSquare currentCell, ChessSquare lGrid, int Size);
-    void SetupBoard(ChessSquare* lGrid, int Size);
+    void ClearBoard(ChessSquare* origin, int Size);
+    void MarkNextLegalMoves(ChessSquare* origin, ChessSquare* currentCell);
+    void SetupBoard(ChessSquare* origin, int Size);
 };
 
 
