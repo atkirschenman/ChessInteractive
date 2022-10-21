@@ -53,5 +53,4 @@ ChessSquare* FindSquare(ChessSquare* Head, int x, int y)
         return walker;
     else
         return nullptr;
-     
 }

@@ -1,1 +1,6 @@
-#include "ChessPiece.h"
+#include "Pawn.h"
+
+int MarkNextLegalMove(ChessSquare* Origin)
+{
+    
+}
