@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "ChessBoard.h"
+#include "ChessGame.h"
 
-ChessBoard* myBoard = new ChessBoard(8);
+ChessGame* myGame = new ChessGame();
 
 void setup() {
   // put your setup code here, to run once:

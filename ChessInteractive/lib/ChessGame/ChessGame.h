@@ -16,5 +16,4 @@ class ChessGame
     ChessSquare* Origin;
 };
 
-
 #endif

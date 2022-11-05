@@ -9,7 +9,7 @@ class ChessBoard {
 	public:	
     int Size;
     
-    ChessSquare* Origin;
+    ChessSquare* Origin = new ChessSquare();
     //Constructors//
     ChessBoard(int s);
 
