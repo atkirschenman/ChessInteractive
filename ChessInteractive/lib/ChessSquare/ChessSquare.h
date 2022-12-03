@@ -1,5 +1,5 @@
 //#include <Arduino.h>
-#include "ChessPiece.h"
+#include "Pawn.h"
 #ifndef CS_H
 #define CS_H
 
@@ -14,7 +14,7 @@ class ChessSquare
         ChessSquare* Down;
         ChessSquare* Left;
         ChessSquare* Right;
-        ChessPiece* OccupiedPiece;
+        Pawn* OccupiedPiece;
 
         ChessSquare(int x, int y); 
         ChessSquare();

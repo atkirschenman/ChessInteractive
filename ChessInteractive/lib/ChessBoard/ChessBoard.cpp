@@ -14,16 +14,8 @@
 		}
 	}
 
-    void ChessBoard::SetupBoard()
+	ChessSquare* ChessBoard::ReturnOrigin()
 	{
-		myChessGame.SetupBoard(Origin, Size);
-	}
-    void ChessBoard::MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell)
-	{
-		myChessGame.MarkNextLegalMoves(Origin,currentCell);
+		return Origin;
 	}
 
-    void ChessBoard::CleartheBoard()
-	{
-		//myChessGame.ClearBoard(theGrid,Size);
-	}

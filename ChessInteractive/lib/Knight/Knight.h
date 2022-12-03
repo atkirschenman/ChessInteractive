@@ -19,7 +19,7 @@ class Knight
 
         Knight(bool lcolor, ChessPieceEnum lid);
 
-         void MarkNextLegalMoves(ChessSquare* Origin,ChessSquare* currentCell);
+         void MarkNextLegalMoves(ChessSquare* Origin);
 };
 
 #endif

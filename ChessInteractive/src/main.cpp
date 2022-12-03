@@ -1,13 +1,13 @@
 #include <Arduino.h>
-#include "ChessBoard.h"
+#include "ChessGame.h"
 
-ChessBoard myBoard = new ChessBoard(8);
+ChessGame* myGame = new ChessGame();
 
 void setup() {
   // put your setup code here, to run once:
 }
 
 void loop() {
-  myBoard.CleartheBoard();
+  myBoard->CleartheBoard();
   // put your main code here, to run repeatedly:
 } 

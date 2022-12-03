@@ -8,17 +8,15 @@ class ChessBoard {
 
 	public:	
     int Size;
-    ChessGame myChessGame;
-    ChessSquare* Origin;
+    
+    ChessSquare* Origin = new ChessSquare();
     //Constructors//
     ChessBoard(int s);
 
+    ChessSquare* ReturnOrigin();
 
-    void SetupBoard();
 
-    void MarkNextLegalMoves(ChessSquare* Origin, ChessSquare* currentCell);
-
-    void CleartheBoard();
+ 
 
     
 };

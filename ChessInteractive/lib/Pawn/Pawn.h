@@ -1,6 +1,6 @@
-#ifndef CP_H
-#define CP_H
-
+#ifndef P_H
+#define P_H
+#include "ChessSquare.h"
 class Pawn
 {
     public:
@@ -17,6 +17,8 @@ class Pawn
             KING};
 
         Pawn(bool lcolor, ChessPieceEnum lid);
+
+        int MarkNextLegalMove(ChessSquare* Origin,ChessSquare* currentPiece);
 };
 
 
