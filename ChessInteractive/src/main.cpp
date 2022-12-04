@@ -1,13 +1,15 @@
-#include <WiFi.h>               // connecting to router
-#include <HTTPClient.h>         // http requests
-#include <LichessAPI.h>         //Jacobs api class for lichess
-#include <SPIFFS.h>             //For flash memory of the html, css, javascript files
-#include <ESPAsyncWebServer.h>  // used for websockets
-#include <AsyncTCP.h>           // used for websockets:
-#include <ArduinoJson.h> 
-// #include "ChessGame.h"
 #include "Arduino.h"
-
+#include <WifiHandler.h>
+  #include <WiFi.h>               // connecting to router
+// #include <AsyncHandler.h>
+  #include <HTTPClient.h>         // http requests
+  #include <ESPAsyncWebServer.h>  // used for websockets
+  #include <AsyncTCP.h>           // used for websockets:
+  #include <ArduinoJson.h> 
+#include <SPIFFSHandler.h>
+  #include <SPIFFS.h>             // For flash memory of the html, css, javascript files
+#include <LichessAPI.h>         // Jacobs api class for lichess
+// #include "ChessGame.h"
 // ChessGame* myGame = new ChessGame();
 
 // https://randomnerdtutorials.com/esp32-websocket-server-arduino/
@@ -18,12 +20,6 @@
 // https://circuits4you.com/2018/11/20/web-server-on-esp32-how-to-update-and-display-sensor-values/
 // https://microcontrollerslab.com/esp32-asynchronous-web-server-espasyncwebserver-library/
 // https://github.com/me-no-dev/ESPAsyncWebServer
-
-//Wifi credentials
-const char* ssid = "CenturyLink4841";
-const char* password = "36e3b7u8eawa3y";
-// const char* ssid = "NETGEAR33";
-// const char* password = "thirstyunicorn765";
 
 // the following variables are unsigned longs because the time, measured in
 // milliseconds, will quickly become a bigger number than can be stored in an int.
@@ -130,16 +126,10 @@ void setup() {
     return;
   }
 
-  // Connecting to wifi
-  WiFi.begin(ssid, password);
-  Serial.println("Connecting");
-  while(WiFi.status() != WL_CONNECTED) { // while not connected, place dots.
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println(WiFi.localIP());
-  Serial.println("");
-  Serial.println("Connected to WiFi network with IP Address: " + WiFi.localIP()); // connection successful
+  // WIFI stuff
+  WifiHandler::setSSID("CenturyLink4841");
+  WifiHandler::setPassword("36e3b7u8eawa3y");
+  WifiHandler::beginWifi();
 
   // Route for documents / web pages
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -159,24 +149,24 @@ void setup() {
     Serial.println("Sent JavaScript");
   });
 
-  initWebSocket();
-
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.htm", String(), false, processor);
   });
+  
+  initWebSocket();
 
   // Start server
   server.begin();
-  
+
   LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
   // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
-  LichessAPI::setCurrentGameId("miF0047S"); // lichess bot
+  LichessAPI::setCurrentGameId("lXuH8rIW"); // lichess bot
 }
 
 
 void loop() {
-  // myBoard->CleartheBoard();
+  // // myBoard->CleartheBoard();
 
   digitalWrite(ledPin, ledState);
   ws.cleanupClients();
@@ -188,6 +178,5 @@ void loop() {
     serializeJson(doc, output);
     ws.textAll(output);
     lastTime = millis();
-
   }
 }
