@@ -32,10 +32,6 @@
     <div id = "boardFEN">%BOARDFEN%</div>
 
     <iframe src="https://lichess.org/training/frame?theme=brown&bg=dark" style="width: 400px; height: 444px;" allowtransparency="true" frameborder="0"></iframe>
-	<iframe src='https://lichess.org/Bgdjq9CdWTDq/embed' width='600' height='397' frameborder='0'></iframe>"
-  <iframe src='https://lichess.org/api/game/Bgdjq9CdWTDq/embed' width='600' height='397' frameborder='0'></iframe>"
-
-
   </div>
 <script src="main.js"></script>
 </body>

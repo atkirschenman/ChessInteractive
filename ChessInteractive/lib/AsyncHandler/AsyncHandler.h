@@ -8,7 +8,7 @@
     class AsyncHandler{
         private: 
             static AsyncWebServer server(int number); // setup server
-            static AsyncWebSocket ws(String websocket); // setup websockets
+            static AsyncWebSocket ws(const char* websocket); // setup websockets
             static void notifyClients();// send to all clients
             static void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
             static int led;

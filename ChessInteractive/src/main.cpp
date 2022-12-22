@@ -66,7 +66,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) { // handle re
     }
     if(doc.containsKey("chessMoveTxt")){
       const char* test = doc["chessMoveTxt"];
-      LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), test);
+      LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), test); // if using bot
+      // LichessAPI::makeABoardMove(LichessAPI::getCurrentGameId(), test); // if using user
     }
   }
 }
@@ -131,7 +132,7 @@ void setup() {
   WifiHandler::setPassword("36e3b7u8eawa3y");
   WifiHandler::beginWifi();
 
-  // Route for documents / web pages
+ // Route for documents / web pages
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", String());
     Serial.println("Sent HTML");
@@ -149,19 +150,19 @@ void setup() {
     Serial.println("Sent JavaScript");
   });
 
+  initWebSocket();
+
   // Route for root / web page
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.htm", String(), false, processor);
   });
-  
-  initWebSocket();
 
   // Start server
   server.begin();
 
   LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
   // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
-  LichessAPI::setCurrentGameId("lXuH8rIW"); // lichess bot
+  LichessAPI::setCurrentGameId("Bgdjq9CdWTDq"); // lichess bot
 }
 
 
