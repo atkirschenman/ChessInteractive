@@ -9,6 +9,7 @@
 #include <SPIFFSHandler.h>
   #include <SPIFFS.h>             // For flash memory of the html, css, javascript files
 #include <LichessAPI.h>         // Jacobs api class for lichess
+#include <PhysicalBoard.h>
 // #include "ChessGame.h"
 // ChessGame* myGame = new ChessGame();
 
@@ -132,6 +133,10 @@ void setup() {
   WifiHandler::setPassword("36e3b7u8eawa3y");
   WifiHandler::beginWifi();
 
+  // Physical Board stuff
+  PhysicalBoard::setupMCP();
+  PhysicalBoard::initalizeBoard();
+
  // Route for documents / web pages
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", String());
@@ -162,22 +167,24 @@ void setup() {
 
   LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
   // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
-  LichessAPI::setCurrentGameId("Bgdjq9CdWTDq"); // lichess bot
+  LichessAPI::setCurrentGameId("9SkulFEmk2aY"); // lichess bot
 }
 
 
 void loop() {
   // // myBoard->CleartheBoard();
 
-  digitalWrite(ledPin, ledState);
-  ws.cleanupClients();
-  if ((millis() - lastTime) > timerDelay) { // intervals 
-    DynamicJsonDocument doc(3000);
-    doc["setUsername"] = LichessAPI::getMyId();
-    doc["setFEN"] = LichessAPI::getCurrentGameFEN();
-    String output;
-    serializeJson(doc, output);
-    ws.textAll(output);
-    lastTime = millis();
-  }
+  // digitalWrite(ledPin, ledState);
+  // ws.cleanupClients();
+  // if ((millis() - lastTime) > timerDelay) { // intervals 
+  //   DynamicJsonDocument doc(3000);
+  //   doc["setUsername"] = LichessAPI::getMyId();
+  //   doc["setFEN"] = LichessAPI::getCurrentGameFEN();
+  //   String output;
+  //   serializeJson(doc, output);
+  //   ws.textAll(output);
+  //   lastTime = millis();
+  // }
+
+  PhysicalBoard::getBoardOutput();
 }
