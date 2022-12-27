@@ -167,7 +167,9 @@ void setup() {
 
   LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
   // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
-  LichessAPI::setCurrentGameId("9SkulFEmk2aY"); // lichess bot
+  // LichessAPI::setCurrentGameId("CR7DGGPvucZB"); // lichess bot
+  LichessAPI::setCurrentGameId(LichessAPI::findCurrentGameId()); // lichess bot
+
 }
 
 

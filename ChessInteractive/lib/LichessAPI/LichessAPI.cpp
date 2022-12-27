@@ -52,6 +52,23 @@ String LichessAPI::getCurrentGameFEN(){
     return jsonRecieved.substring(fenPosition,endQuotePosition);
 }
 
+String LichessAPI::findCurrentGameId(){
+    String jsonRecieved = LichessAPI::getMyOngoingGames(); // get json of all games played
+    // int indexOf = jsonRecieved.indexOf(LichessAPI::getCurrentGameId());
+    // String fenString = "\"fen\":\"";
+    String fullId = "fullId\":\"";
+    int indexOfId = jsonRecieved.indexOf(fullId);
+    Serial.print("index of id: ");
+    Serial.println(indexOfId);
+    // int fenPosition = jsonRecieved.indexOf(fenString, indexOf) + fenString.length();
+    int endQuotePosition = jsonRecieved.indexOf("\"", indexOfId + fullId.length());
+    Serial.print("index of endquote: ");
+    Serial.println(endQuotePosition);
+    Serial.print("Found current game id of:\t\t\t");
+    Serial.println(jsonRecieved.substring(indexOfId + fullId.length(), endQuotePosition));
+    return jsonRecieved.substring(indexOfId + fullId.length(),endQuotePosition);
+}
+
 
 String LichessAPI::abortGame(String gameId){
     return httpPost("https://lichess.org/api/bot/game/" + gameId + "/abort");

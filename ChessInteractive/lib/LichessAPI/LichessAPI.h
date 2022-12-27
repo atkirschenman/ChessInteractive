@@ -27,6 +27,7 @@
             static String abortGame(String gameId);
             static String resignGame(String gameId);
             static String getCurrentGameFEN();
+            static String findCurrentGameId();
             // LichessGame(char* token);
             // char NumToChar(int column);
 
