@@ -43,6 +43,7 @@ String LichessAPI::getCurrentGameId(){
 }
 
 String LichessAPI::getCurrentGameFEN(){
+    // received through njson format which has been weird to parse, so i do a manual parse
     String jsonRecieved = httpGet("https://lichess.org/api/account/playing"); // get json of all games played
     int indexOf = jsonRecieved.indexOf(LichessAPI::getCurrentGameId());
     String fenString = "\"fen\":\"";
@@ -52,20 +53,12 @@ String LichessAPI::getCurrentGameFEN(){
     return jsonRecieved.substring(fenPosition,endQuotePosition);
 }
 
-String LichessAPI::findCurrentGameId(){
+String LichessAPI::findCurrentGameId(){ 
+    // received through njson format which has been weird to parse, so i do a manual parse
     String jsonRecieved = LichessAPI::getMyOngoingGames(); // get json of all games played
-    // int indexOf = jsonRecieved.indexOf(LichessAPI::getCurrentGameId());
-    // String fenString = "\"fen\":\"";
     String fullId = "fullId\":\"";
     int indexOfId = jsonRecieved.indexOf(fullId);
-    Serial.print("index of id: ");
-    Serial.println(indexOfId);
-    // int fenPosition = jsonRecieved.indexOf(fenString, indexOf) + fenString.length();
     int endQuotePosition = jsonRecieved.indexOf("\"", indexOfId + fullId.length());
-    Serial.print("index of endquote: ");
-    Serial.println(endQuotePosition);
-    Serial.print("Found current game id of:\t\t\t");
-    Serial.println(jsonRecieved.substring(indexOfId + fullId.length(), endQuotePosition));
     return jsonRecieved.substring(indexOfId + fullId.length(),endQuotePosition);
 }
 

@@ -6,25 +6,22 @@
     class PhysicalBoard{
       private: 
         static int HEsetup[4][4];
-        static int currentBoard[8][8];
-        static int readBoard[8][8];
-        static int boardX;
-        static int boardY;
-        static int boardOrder[2][2];
+        static int oldBoard[8][8];
+        static int newBoard[8][8];
+        static int panelOrder[2][2];
         static Adafruit_MCP23X17 mcp[4];
         static void onPickup();
-        static bool boardsAreEqual(int readBoard[8][8], int currentBoard[8][8]);
+        static bool boardsMatch(int newBoard[8][8], int oldBoard[8][8]);
         static int pickupLocation[2];
         static int placeLocation[2];
         static void checkPickAndPlace();
-        static bool pickupLocationHasValue;
-        static bool placeLocationHasValue;
+        static bool isPickedUp;
+        static bool isPlaced;
         static char intToCharOnBoard(int x);
+        static bool boardInitalized;
       public:
         static void setupMCP();
-        static void getBoardOutput();
-        static void initalizeBoard();
-
+        static void readBoard();
     };
 
 #endif

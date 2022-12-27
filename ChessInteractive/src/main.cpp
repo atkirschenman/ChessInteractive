@@ -135,7 +135,6 @@ void setup() {
 
   // Physical Board stuff
   PhysicalBoard::setupMCP();
-  PhysicalBoard::initalizeBoard();
 
  // Route for documents / web pages
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -188,5 +187,5 @@ void loop() {
   //   lastTime = millis();
   // }
 
-  PhysicalBoard::getBoardOutput();
+  PhysicalBoard::readBoard();
 }
