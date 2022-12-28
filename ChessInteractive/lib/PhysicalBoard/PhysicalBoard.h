@@ -2,6 +2,7 @@
 #define PhysicalBoard_h
     #include <Adafruit_MCP23X17.h>  // I2C for physical board
     #include <LichessAPI.h>         // Jacobs api class for lichess
+    #include <NeoPixel.h>
 
     class PhysicalBoard{
       private: 

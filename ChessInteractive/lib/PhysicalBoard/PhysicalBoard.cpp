@@ -68,15 +68,6 @@ void PhysicalBoard::checkPickAndPlace(){ //
     if(isPickedUp  && isPlaced){ // if a piece is picked up and placed
         isPickedUp = false; // reset 
         isPlaced = false; // reset
-        Serial.print("pickup location: ");
-        Serial.print(pickupLocation[0]);
-        Serial.print(", ");
-        Serial.println(pickupLocation[1]);
-
-        Serial.print("place location: ");
-        Serial.print(placeLocation[0]);
-        Serial.print(", ");
-        Serial.println(placeLocation[1]);
 
         if(memcmp(pickupLocation, placeLocation, sizeof(pickupLocation)) == 0){ // if picked up and placed in the same location, return 
             return;
@@ -126,7 +117,7 @@ bool PhysicalBoard::boardsMatch(int newBoard[8][8], int oldBoard[8][8]){ // chec
                         isPickedUp = true; // piece picked up true
                     }
 
-                    Serial.print("piece picked up at x: ");
+                    Serial.print("piece picked at x: ");
                     Serial.print(j);
                     Serial.print("and y: ");
                     Serial.println(i);
@@ -135,13 +126,15 @@ bool PhysicalBoard::boardsMatch(int newBoard[8][8], int oldBoard[8][8]){ // chec
                     placeLocation[1] = i; // y index
                     isPlaced = true; // a piece has been placed3
 
-                    Serial.print("piece placed up at x: ");
+                    Serial.print("piece placed at x: ");
                     Serial.print(placeLocation[0]);
                     Serial.print("and y: ");
                     Serial.println(placeLocation[1]);
                 }
                 checkPickAndPlace();  
                 boardsMatch =  false;
+
+                NeoPixel::illuminateCell(j, i);
                 break; // leave for loop since boards don't match
 
                 // this is where you can get the x,y values for where the piece is moved

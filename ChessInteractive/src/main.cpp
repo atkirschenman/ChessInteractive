@@ -10,6 +10,8 @@
   #include <SPIFFS.h>             // For flash memory of the html, css, javascript files
 #include <LichessAPI.h>         // Jacobs api class for lichess
 #include <PhysicalBoard.h>
+#include <NeoPixel.h>
+
 // #include "ChessGame.h"
 // ChessGame* myGame = new ChessGame();
 
@@ -136,6 +138,11 @@ void setup() {
   // Physical Board stuff
   PhysicalBoard::setupMCP();
 
+  // LED Board stuff
+  NeoPixel::begin();
+  NeoPixel::initalizeBoardLED();
+  NeoPixel::setBrightness(50);
+
  // Route for documents / web pages
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", String());
@@ -166,7 +173,6 @@ void setup() {
 
   LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
   // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
-  // LichessAPI::setCurrentGameId("CR7DGGPvucZB"); // lichess bot
   LichessAPI::setCurrentGameId(LichessAPI::findCurrentGameId()); // lichess bot
 
 }
