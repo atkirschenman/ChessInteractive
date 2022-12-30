@@ -1,6 +1,8 @@
 #include "LichessAPI.h"
 String LichessAPI::lichessToken;
 String LichessAPI::currentGameId;
+bool LichessAPI::isMyTurn;
+
 
 void LichessAPI::setLichessToken(String token){ // sets lichessAPI token
     LichessAPI::lichessToken = token;
@@ -45,9 +47,9 @@ String LichessAPI::getCurrentGameId(){
 String LichessAPI::getCurrentGameFEN(){
     // received through njson format which has been weird to parse, so i do a manual parse
     String jsonRecieved = httpGet("https://lichess.org/api/account/playing"); // get json of all games played
-    int indexOf = jsonRecieved.indexOf(LichessAPI::getCurrentGameId());
+    int indexOfCurrentGameId = jsonRecieved.indexOf(LichessAPI::getCurrentGameId());
     String fenString = "\"fen\":\"";
-    int fenPosition = jsonRecieved.indexOf(fenString, indexOf) + fenString.length();
+    int fenPosition = jsonRecieved.indexOf(fenString, indexOfCurrentGameId) + fenString.length();
     int endQuotePosition = jsonRecieved.indexOf("\"", fenPosition);
 
     return jsonRecieved.substring(fenPosition,endQuotePosition);
@@ -57,9 +59,9 @@ String LichessAPI::findCurrentGameId(){
     // received through njson format which has been weird to parse, so i do a manual parse
     String jsonRecieved = LichessAPI::getMyOngoingGames(); // get json of all games played
     String fullId = "fullId\":\"";
-    int indexOfId = jsonRecieved.indexOf(fullId);
-    int endQuotePosition = jsonRecieved.indexOf("\"", indexOfId + fullId.length());
-    return jsonRecieved.substring(indexOfId + fullId.length(),endQuotePosition);
+    int indexOfId = jsonRecieved.indexOf(fullId) + fullId.length();
+    int endQuotePosition = jsonRecieved.indexOf("\"", indexOfId);
+    return jsonRecieved.substring(indexOfId, endQuotePosition);
 }
 
 
@@ -89,8 +91,8 @@ String LichessAPI::httpGet(String url){
             Serial.print("HTTP Response code: ");
             Serial.println(httpResponseCode);
             String payload = http.getString();
-            Serial.print("HTTP payload: ");
-            Serial.println(payload);
+            // Serial.print("HTTP payload: ");
+            // Serial.println(payload);
             Serial.println();
             return payload;
         } else{ // error
@@ -152,5 +154,24 @@ String LichessAPI::jsonParse(String jsonStructure, String name){
     String parsedName = doc[name];
     return parsedName;
 }
+
+String LichessAPI::getLastMove(){
+    Serial.println("getLastMove method:");
+    String jsonRecieved = httpGet("https://lichess.org/api/account/playing"); // get json of all games played
+    int indexOfCurrentGame = jsonRecieved.indexOf(LichessAPI::getCurrentGameId()); // need to find current game
+    String isMyTurnString = "isMyTurn\":";
+    int startQuotePosition = jsonRecieved.indexOf(isMyTurnString, indexOfCurrentGame)  + isMyTurnString.length();
+    int endQuotePosition = jsonRecieved.indexOf("}", startQuotePosition);
+    if(jsonRecieved.substring(startQuotePosition,endQuotePosition) == "true"){
+        Serial.println("lichessAPI setting myTurn to true");
+        isMyTurn = true;
+    }
+
+    String lastMove = "lastMove\":\"";
+    startQuotePosition = jsonRecieved.indexOf(lastMove, indexOfCurrentGame)  + lastMove.length();
+    endQuotePosition = jsonRecieved.indexOf("\"", startQuotePosition);
+    return jsonRecieved.substring(startQuotePosition,endQuotePosition);
+}
+
 
 

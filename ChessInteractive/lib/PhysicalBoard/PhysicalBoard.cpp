@@ -9,7 +9,9 @@ int PhysicalBoard::HEsetup[4][4] = { // This is the order of the I2C I/O as seen
   {13, 15, 0, 2}  
 };
 
-int PhysicalBoard::oldBoard[8][8]; // What the board value was from last pickup/placement of piece
+int PhysicalBoard::cellsToIgnore[4];
+
+int PhysicalBoard::oldBoard[8][8]; // What the board value was from pickup/placement of piece
 int PhysicalBoard::newBoard[8][8]; // What is read from the HE sensors
 int PhysicalBoard::pickupLocation[2]; // x,y of piece that is picked up
 int PhysicalBoard::placeLocation[2]; // x,y of piece that is placed
@@ -69,6 +71,11 @@ void PhysicalBoard::checkPickAndPlace(){ //
         isPickedUp = false; // reset 
         isPlaced = false; // reset
 
+        if(pickupLocation[0] == cellsToIgnore[0] && pickupLocation[1] == cellsToIgnore[1]){
+            Serial.println("ignoring black pieces");
+            return;
+        }
+
         if(memcmp(pickupLocation, placeLocation, sizeof(pickupLocation)) == 0){ // if picked up and placed in the same location, return 
             return;
         }
@@ -77,7 +84,10 @@ void PhysicalBoard::checkPickAndPlace(){ //
         messageToSend = String(intToCharOnBoard(pickupLocation[0])) + (8-pickupLocation[1]) + String(intToCharOnBoard(placeLocation[0])) + (8-placeLocation[1]);
         Serial.println(messageToSend);
 
-        LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), messageToSend); // send move to lichess
+        // LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), messageToSend); // send move to lichess
+        LichessAPI::makeABoardMove(LichessAPI::getCurrentGameId(), messageToSend); // send move to lichess
+        Serial.println("physicalBoard setting my turn to false.");
+        LichessAPI::isMyTurn = false;
     }else{
         // do nothing
     }
@@ -124,7 +134,7 @@ bool PhysicalBoard::boardsMatch(int newBoard[8][8], int oldBoard[8][8]){ // chec
                 }else{ // if not picked up, then newBoard must have piece placed onto the board
                     placeLocation[0] = j; // x index
                     placeLocation[1] = i; // y index
-                    isPlaced = true; // a piece has been placed3
+                    isPlaced = true; // a piece has been placed
 
                     Serial.print("piece placed at x: ");
                     Serial.print(placeLocation[0]);
@@ -134,10 +144,9 @@ bool PhysicalBoard::boardsMatch(int newBoard[8][8], int oldBoard[8][8]){ // chec
                 checkPickAndPlace();  
                 boardsMatch =  false;
 
-                NeoPixel::illuminateCell(j, i);
-                break; // leave for loop since boards don't match
-
                 // this is where you can get the x,y values for where the piece is moved
+                // NeoPixel::illuminateCell(j, i);
+                break; // leave for loop since boards don't match
             }
         }
     }
