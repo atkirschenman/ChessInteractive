@@ -69,8 +69,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) { // handle re
     }
     if(doc.containsKey("chessMoveTxt")){
       const char* test = doc["chessMoveTxt"];
-      LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), test); // if using bot
-      // LichessAPI::makeABoardMove(LichessAPI::getCurrentGameId(), test); // if using user
+      // LichessAPI::makeABotMove(LichessAPI::getCurrentGameId(), test); // if using bot
+      LichessAPI::makeABoardMove(LichessAPI::getCurrentGameId(), test); // if using user
     }
   }
 }
@@ -171,8 +171,8 @@ void setup() {
   // Start server
   server.begin();
 
-  LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
-  // LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
+  // LichessAPI::setLichessToken("lip_kv7qP8TCWBiEaLof4KOf"); // setting lichessAPI harryBotter123
+  LichessAPI::setLichessToken("lip_pF1PZ66cS6xkQuqThTg4"); // setting lichessAPI kabooterz
   LichessAPI::setCurrentGameId(LichessAPI::findCurrentGameId()); // lichess bot
 
 }
@@ -192,6 +192,10 @@ void loop() {
   //   ws.textAll(output);
   //   lastTime = millis();
   // }
+  if (((millis() - lastTime) > timerDelay)  && !PhysicalBoard::isPickedUp && !LichessAPI::isMyTurn) { // no need to check lichess if i have a piece picked up, or its my turn 
+    Serial.println("inside main");
+    NeoPixel::highlightLastMove();
+  }
 
   PhysicalBoard::readBoard();
 }
