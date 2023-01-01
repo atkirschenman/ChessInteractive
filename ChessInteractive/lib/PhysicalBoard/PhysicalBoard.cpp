@@ -67,6 +67,10 @@ void PhysicalBoard::readBoard(){ // read the values of the chess board and assig
 }
 
 void PhysicalBoard::checkPickAndPlace(){ //
+    if(!isPickedUp && isPlaced){ // if there is a piece somehow placed without being picked up, reset everything
+        isPickedUp = false; // reset 
+        isPlaced = false; // reset
+    }
     if(isPickedUp  && isPlaced){ // if a piece is picked up and placed
         isPickedUp = false; // reset 
         isPlaced = false; // reset
