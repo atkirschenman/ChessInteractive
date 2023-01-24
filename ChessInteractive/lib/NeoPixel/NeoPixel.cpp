@@ -1,28 +1,29 @@
 #include "NeoPixel.h"
 
-#define LED_PIN 15
-#define LED_COUNT 64
+#define LED_PIN 15 // has to be preprocessed
+#define LED_COUNT 64 // has to be preprocessed
+#define BOARD_WIDTH 8 // width of board
 
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
-String NeoPixel::oldLastMove; 
+String NeoPixel::oldLastMove; // used to compare last move and see if they are different
 
-int NeoPixel::neoSetup[4][4] = {
+uint8_t NeoPixel::neoSetup[][4] = { // locations of the HE I/O sensors on the panel
   {3, 4, 11, 12},
   {2, 5, 10, 13},
   {1, 6, 9, 14},
   {0, 7, 8, 15}
 };
 
-int NeoPixel::panelOrder[2][2] = { // order of how the panels are alligned to create the chess board (numbers represent the addresses)
+uint8_t NeoPixel::panelOrder[][2] = { // order of how the panels are alligned to create the chess board (numbers represent the addresses)
   {2, 3},
   {0, 1}
 };
 
-int NeoPixel::boardLED[8][8];
+uint8_t NeoPixel::boardLED[BOARD_WIDTH][BOARD_WIDTH]; // Matrix of LED's need to change uint8_t if board larger than 16x16
 
-void NeoPixel::initalizeBoardLED(){
-    int boardX;
-    int boardY;
+void NeoPixel::initalizeBoardLED(){ // Rans once, read board I/O status
+    uint8_t boardX; // x location of board matrix
+    uint8_t boardY; // y location of board matrix
 
     for(int i = 0; i < 2; i++){ // panel rows
         for(int j = 0; j < 4; j++){ // cell rows
@@ -38,7 +39,7 @@ void NeoPixel::initalizeBoardLED(){
     }
 };
 
-void NeoPixel::begin(){
+void NeoPixel::begin(){ // begin LED's
     strip.begin();
     strip.show();
 }
@@ -52,20 +53,19 @@ void NeoPixel::setBrightness(uint8_t brightness){ // constructor
 //     strip.show();
 // }
 
-void NeoPixel::illuminateCell(int x, int y){ // overloaded method where default value is red
+void NeoPixel::illuminateCell(uint8_t x, uint8_t y){ // overloaded method where default value is red
     NeoPixel::illuminateCell(x, y, strip.Color(255, 0, 0));
 }
 
-
-void NeoPixel::illuminateCell(int x, int y, uint32_t color){
+void NeoPixel::illuminateCell(uint8_t x, uint8_t y, uint32_t color){ // lights up 1 LED with custom color
     strip.setPixelColor(boardLED[y][x], color);         //  Set pixel's color (in RAM)
     strip.show();
 }
 
 
-void NeoPixel::illuminateBoard(int board[8][8]){
-    for(int i = 0; i < 8; i++){
-        for(int j = 0; j < 8; j++){
+void NeoPixel::illuminateBoard(uint8_t board[8][8]){ // illuminate whole board, given the matrix as an argument
+    for(int i = 0; i < BOARD_WIDTH; i++){
+        for(int j = 0; j < BOARD_WIDTH; j++){
             if(board[j][i] == 1){
                 illuminateCell(i, j);
             }
@@ -73,14 +73,14 @@ void NeoPixel::illuminateBoard(int board[8][8]){
     }
 }
 
-void NeoPixel::clear(){
+void NeoPixel::clear(){ // turn off all LED's
     strip.clear();
 }
 
-void NeoPixel::highlightLastMove(){
-    clear();
-    Serial.println("highlightLastMoveMethod:");
-    String lastMove = LichessAPI::getLastMove();
+void NeoPixel::highlightLastMove(){ // highlights the "from" square to the "to" square
+    clear(); // turn off all LED's
+
+    String lastMove = LichessAPI::getLastMove(); // get last move from lichess
     if(lastMove == "" || lastMove == oldLastMove){ // if no last move, game just started or lastMove is that same as the previous last move. 
         Serial.println("last moves are the same");
         // clear();
@@ -90,9 +90,9 @@ void NeoPixel::highlightLastMove(){
 
     oldLastMove = lastMove; 
 
-    int myArray[4];
+    uint8_t myArray[4]; // represents {from_x, from_y, to_x, to_y}
     
-    for(int i = 0; i < lastMove.length(); i++){
+    for(uint8_t i = 0; i < lastMove.length(); i++){
         switch (lastMove[i]){
             case 'a':
                 myArray[i] = 0;
@@ -121,7 +121,6 @@ void NeoPixel::highlightLastMove(){
             default:
                 myArray[i] = 8 - (lastMove[i] - '0');
         }
-        // Serial.print(myArray[i]);
     }
         
     for(int i = 0; i < lastMove.length(); i++){

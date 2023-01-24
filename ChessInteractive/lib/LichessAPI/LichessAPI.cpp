@@ -155,6 +155,7 @@ String LichessAPI::jsonParse(String jsonStructure, String name){
     return parsedName;
 }
 
+// returns a string of fromLocationToLocation ex: e2e4
 String LichessAPI::getLastMove(){
     Serial.println("getLastMove method:");
     String jsonRecieved = httpGet("https://lichess.org/api/account/playing"); // get json of all games played

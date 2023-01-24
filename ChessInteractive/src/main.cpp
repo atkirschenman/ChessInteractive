@@ -195,7 +195,7 @@ void loop() {
   if (((millis() - lastTime) > timerDelay)  && !PhysicalBoard::isPickedUp && !LichessAPI::isMyTurn) { // no need to check lichess if i have a piece picked up, or its my turn 
     Serial.println("inside main");
     NeoPixel::highlightLastMove();
-  }
+  }  
 
   PhysicalBoard::readBoard();
 }

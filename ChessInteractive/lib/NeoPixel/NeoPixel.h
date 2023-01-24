@@ -6,11 +6,9 @@
 
 class NeoPixel{
   private: 
-    static int neoSetup[4][4];
-    static int panelOrder[2][2];
-    static int boardLED[8][8];
-    #define LED_PIN 15;
-    #define LED_COUNT 64;
+    static uint8_t neoSetup[][4];
+    static uint8_t panelOrder[][2];
+    static uint8_t boardLED[8][8];
     // Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
     static String oldLastMove; 
 
@@ -18,12 +16,11 @@ class NeoPixel{
     static void initalizeBoardLED();
     static void setBrightness(uint8_t brightness);
     static void begin();
-    static void illuminateCell(int x, int y);
-    static void illuminateCell(int x, int y, uint32_t color);
+    static void illuminateCell(uint8_t x, uint8_t y);
+    static void illuminateCell(uint8_t x, uint8_t y, uint32_t color);
     static void clear();
     static void highlightLastMove();
-    static void illuminateBoard(int board[8][8]);
-
+    static void illuminateBoard(uint8_t board[8][8]);
 };
 
 #endif
