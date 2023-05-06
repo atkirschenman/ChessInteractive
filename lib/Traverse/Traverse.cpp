@@ -1,7 +1,7 @@
 #include "Traverse.h"
 
 //Must Create 0th column first before adding rows
-int AddSquare(ChessSquare* Head, int x, int y)
+int AddSquare(ChessSquare*& Head, int x, int y)
 {
     ChessSquare* walker = Head;
     if (walker->ColumnNumber==x &&walker->RowNumber==y)
@@ -31,7 +31,7 @@ int AddSquare(ChessSquare* Head, int x, int y)
         newSquare->Down->Up=newSquare;
 }
 
-ChessSquare* FindSquare(ChessSquare* Head, int x, int y)
+ChessSquare* FindSquare(ChessSquare*& Head, int x, int y)
 {
     ChessSquare* walker=Head;
 

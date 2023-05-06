@@ -3,6 +3,9 @@
 #include "esp_wpa2.h" //wpa2 library for connections to Enterprise networks
 #include <Preferences.h>
 #include <WiFiClientSecure.h>
+#include "base64.h"
+#include "LittleFS.h"
+#include "ArduinoJson.h"
 
 class SmartConfig
 {
